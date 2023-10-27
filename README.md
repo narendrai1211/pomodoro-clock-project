@@ -1,5 +1,3 @@
-Creating a well-structured README for your project is essential to provide information to users and potential collaborators. Here's a sample README for your Pomodoro Clock mini-project:
-
 # Pomodoro Clock Mini-Project
 
 
