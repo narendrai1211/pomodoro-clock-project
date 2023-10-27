@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pomodoro Timer</title>
+</head>
+<body>
+    <h1>Pomodoro Timer</h1>
+    <div id="timer">25:00</div>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#start").click(function() {
+                $.post("/start_timer", function(data) {
+                    if (data.is_running) {
+                        updateTimer(data.remaining_time);
+                        $("#start").prop("disabled", true);
+                        $("#stop").prop("disabled", false);
+                    }
+                });
+            });
+
+            $("#stop").click(function() {
+                $.post("/stop_timer", function(data) {
+                    if (!data.is_running) {
+                        updateTimer(data.remaining_time);
+                        $("#start").prop("disabled", false);
+                        $("#stop").prop("disabled", true);
+                    }
+                });
+            });
+
+            function updateTimer(remaining_time) {
+                let minutes = Math.floor(remaining_time / 60);
+                let seconds = Math.floor(remaining_time % 60);
+                let display = minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
+                $("#timer").text(display);
+            }
+        });
+    </script>
+</body>
+</html>
